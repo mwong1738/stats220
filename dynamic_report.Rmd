@@ -80,7 +80,7 @@ max_time_used <- max(latest_data$Time_minutes)
 mean_time_used <-mean(latest_data$Time_minutes)
 ```
 
-## Additional Data
+## Analysis
 The minimum time spent on a social media app was `r min_time_used` minutes, the mean time was `r mean_time_used` minutes and the maximum time was `r max_time_used` minutes.
 
 
