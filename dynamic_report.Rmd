@@ -1,0 +1,80 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE, fig.height = 4, fig.width = 6}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+```
+```{r}
+library(tidyverse)
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTyjSlCxXerTQkPD3qOPlxVnwSVbSE1UrcuJVj1dowzUzrlSwohdLZpxX5xEI1hEjdv6DmPhosujzpX/pub?output=csv")
+
+latest_data <- rename(logged_data,
+                      App = 2,
+                      Time_minutes = 3,
+                      Ads_seen = 4,
+                      Type_ads = 5,
+                      User_interest = 6)
+```
+
+
+```{css}
+h2 {
+  color: #2f4f4f;
+  font-family: bold, verdana;
+  text-align: center;
+  border: 2px solid black;
+}
+
+body {
+  background-color: lightgrey;
+  font-family: "Times New Roman";
+  color: #36454F
+}
+```
+
+## Social media Ads and its effects on users
+This dynamic report is intended to communicate how users interact with social media ads and analyse the effectiveness of social media marketing via different mediums of platforms. This report helps gain insight to the significance of social media marketing to help analyse platforms for advertising. 
+
+```{r}
+
+# Bar graph of num uses of apps and their ranges ads seen
+App_and_numAds <- latest_data %>%
+  ggplot() + geom_bar(aes(x = App, fill = Ads_seen)) + 
+  labs(title = "App and number of Ads seen",
+       x = "App",
+       y = "Number of times",
+       fill = "Ads seen")
+App_and_numAds
+```
+
+The Graph of: App and Number of Ads seen displays the social media apps utilized and the frequency of ads exposed to users in the respective platform.
+The graph depicts the ad saturation on social media apps and convey which app tends to expose users to more ads.It is evident Instagram was the most used platform with 8 sessions being Instagram, followed by TikTok and Facebook with 5 sessions and SnapChat with 2. In Addition, Instagram appears to be the social media platform with the highest exposure of Ads given that 62.5% of sessions on Instagram there were 1-3 Ads seen, and 37.5% of the time, more than 5 ads were displayed. In the 5 Facebook Sessions, 67% of the sessions exposed 1-3 Ads and 33% of the sessions, 4-5 Ads were shown. In contrast, TikTok shows all ranges of Ad exposure with indication that 40% of the time, no Ads were shown.This indicates that Instagram is the most consistent and tends to show the most Ads per session.
+
+```{r}
+
+# Bar graph of the App's ads and the user interest level 
+App_ads_interest <- latest_data %>% 
+  ggplot() + geom_bar(aes(x = App, fill = User_interest)) +
+  labs(title = "App used and user Interest",
+    caption = "Relationship between App's ads and user interest",
+    x = "App",
+    fill = "User Interest")
+App_ads_interest
+
+```
+
+The graph of: App and and ads interest displays the engagement levels of seen Ads with the respective App used. The NA represents sessions were no Ads were displayed such that there were 2 sessions of using TikTok where no Ads were seen. Evidently, Instagram is seen to showcase the highest percentage of ads that were considered interesting as 87.5% of Ads displayed on Instagram were considered interesting. Hence, indicative of Instagram showcasing the most engaging ads. 
+
+```{r}
+min_time_used <- min(latest_data$Time_minutes)
+
+max_time_used <- max(latest_data$Time_minutes)
+
+mean_time_used <-mean(latest_data$Time_minutes)
+```
+
+The minimum time spent on a social media app was `r min_time_used` minutes, the mean time was `r mean_time_used` minutes and the maximum time was `r mean_time_used` minutes.
+
+
